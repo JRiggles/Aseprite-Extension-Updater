@@ -16,8 +16,33 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 
 local preferences = {} -- create a global table to store extension preferences
 
+
+local function getLatestReleaseLink(extensionName)
+  local url = "https://api.github.com/repos/" .. extensionName .. "/releases/latest"
+  local response = app.http.get(url)
+
+  if response.status ~= 200 then
+    return nil, "Failed to fetch release information"
+  end
+
+  local release_info = json.decode(response.text)
+  if not release_info or not release_info.html_url then
+    return nil, "Invalid release information"
+  end
+
+  return release_info.html_url
+end
+
+
 local function main()
-  -- add main extension code here
+  local extensionName = "jriggles/Lospec Palette Importer"
+  local latestReleaseLink, err = getLatestReleaseLink(extensionName)
+
+  if latestReleaseLink then
+    print("Latest release link: " .. latestReleaseLink)
+  else
+    print("Error: " .. err)
+  end
 end
 
 -- Aseprite plugin API stuff...
