@@ -37,6 +37,18 @@ Once installed, you can find the updater in Aseprite's `File` menu.
 
 Simply click on **Check for Extension Updates** to check for updates and download the latest versions of compatible installed extensions.
 
+### If any updates are available, you'll see them listed in a dialog like this:
+
+![updates available](./screenshots/updates%20available.png)
+
+- Clicking **Download** will open your default browser and download the extension. Once the extension is downloaded, you can install it manually
+
+- Clicking **Download & Install** will download the extension and then Aseprite will prompt you to install it
+
+### If everything is already up to date, you'll see this instead:
+
+![no updates available](./screenshots/no%20updates%20available.png)
+
 ## Installation
 You can download this extension from [itch.io](https://sudo-whoami.itch.io/extension-name-here) as a "pay what you want" tool
 
@@ -70,8 +82,9 @@ Add the following to the root of your `package.json`:
 
 1. **Create a new release**: Go to your GitHub repository, click on "Releases" on the right sidebar, and then click "Draft a new release".
 2. **Tag the release**: Set the tag version (e.g., `v1.0.0`) and ensure it matches the `version` field in your `package.json`.
-3. **Release title and description**: Provide a title and description for your release. This can include details about the changes and new features.
-4. **Attach files**: Upload the extension file (e.g., `<your extension>.aseprite-extension`) to the release.
+3. **Release title and description**: Provide a title and description for your release. This can include details about the changes and new features. (This isn't required by the updater, but it is good practice!)
+4. **Attach files**: Upload the extension file (e.g., `<your extension>.aseprite-extension`) to the release. If you forget to attach the `*.aseprite-extension` file to your release, users will see a dialog like this when they attempt to update (where **"Extension Updater"** is replaced with your extension's name):
+![no bundle](./screenshots/err%20no%20bundle.png)
 5. **Publish the release**: Click "Publish release" to make it available.
 
 By following these steps, your extension will be compatible with the Aseprite Extension Updater, allowing users to easily check for and download updates!
