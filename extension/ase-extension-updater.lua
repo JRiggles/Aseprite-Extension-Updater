@@ -14,7 +14,7 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 -- ignore dialogs which are defined with local names for readablity, but may be unused
 ---@diagnostic disable: unused-local
 
--- local preferences = {} -- create a global table to store extension preferences
+local preferences = {} -- create a global table to store extension preferences
 
 --- Fetch the latest release data from a specified GitHub repository.
 --- @param endpoint string -- the URL to fetch the latest release data from
@@ -86,11 +86,7 @@ local function downloadAndInstall(update)
 		os.execute("rm " .. tempFilePath)
 	end
 	os.execute('curl -Ls "' .. update.downloadUrl .. '" -o "' .. tempFilePath .. '"')
-	if app.os.windows then
-		os.execute('start "" "' .. tempFilePath .. '"')
-	else
-		os.execute('open "' .. tempFilePath .. '"')
-	end
+	app.command.Options{ installExtension = tempFilePath }
 end
 
 local function compareVersions(currentVersion, releaseVersion)
@@ -109,13 +105,16 @@ local function compareVersions(currentVersion, releaseVersion)
 	end
 end
 
-local function main()
+local function main(isStartup)
+	-- check if the updater was called at startup (defaults to false)
+	isStartup = isStartup or false
 	-- check installed extensions for repository info / compatibility with updater
 	local compatibleExtensions = findCompatibleExtensions()
 	if compatibleExtensions == nil then
 		return
 	end
 
+	local assetErr = false
 	local availableUpdates = {}  -- table to store available update info
 
 	-- iterate through the compatible extensions and check for updates
@@ -152,6 +151,7 @@ local function main()
 				end
 			end
 		else
+			assetErr = true
 			app.alert{
 				title="Extension Updater Error",
 				text='No aseprite-extension bundle found for "' .. displayName .. '". Contact the extension\'s owner.'
@@ -159,8 +159,9 @@ local function main()
 		end
 	end
 
+	local dlg = Dialog()
 	if #availableUpdates > 0 then
-		local dlg = Dialog{ title="Updates Available" }
+		dlg:modify{ title="Extension Updates Available" }
 		for _, update in ipairs(availableUpdates) do
 			-- strip the tagVersion to just its numerical and '.' characters
 			local sanitizedTagVersion = update.tagVersion:match("%d+[%d%.]*")
@@ -173,6 +174,7 @@ local function main()
 				text="Download",
 				hexpand=true,
 				onclick=function()
+					-- open the default browser to download the file
 					if app.os.windows then
 						os.execute('start "" "' .. update.downloadUrl .. '"')
 					else
@@ -189,49 +191,64 @@ local function main()
 					dlg:close()
 				end,
 			}
+			-- add separator between updates
 			:separator()
 		end
+	elseif not isStartup and not assetErr then
+		-- only show this alert if the user manually checks for updates
+		dlg:modify{ title="No Extension Updates Available" }
+		:label{ text="All qualified extensions are up to date!" }
+	end
+
+	if not assetErr then
 		dlg:newrow()
-		-- :button{
-		-- 	id="download_all",
-		-- 	text="Download All",
-		-- 	onclick=function()
-		-- 		for _, update in ipairs(availableUpdates) do
-		-- 			local tempFilePath = app.fs.joinPath(app.fs.userDocsPath, update.name .. ".aseprite-extension")
-		-- 			if app.fs.isFile(tempFilePath) then
-		-- 				os.execute("rm " .. tempFilePath)
-		-- 			end
-		-- 			os.execute('curl -Ls "' .. update.downloadUrl .. '" -o "' .. tempFilePath .. '"')
-		-- 		end
-		-- 		dlg:close()
-		-- 	end
-		-- }
+		:check{
+			id="checkAtStartup",
+			text="Check for updates when Aseprite starts",
+			selected=preferences.checkAtStartup or false,
+			onclick=function()
+				preferences.checkAtStartup = not preferences.checkAtStartup
+			end
+		}
+		:separator()
+		:button{
+			id="refresh",
+
+
+			text="Refresh",
+			onclick=function()
+				dlg:close()
+				app.command.aseExtensionUpdater()
+			end
+		}
 		:button{id="cancel", text="Cancel", focus=true }
-		:show()
-		-- TODO: run the updater again to check for remaining updates
-		-- if dlg.data["download_install"] then
-			-- run the updater again to check for remaining updates
-			-- app.command.aseExtensionUpdater()
-		-- end
-	else
-		app.alert{title="No Updates Available", text="All qualified extensions are up to date!"}
+		:show{ autoscrollbars=true }
+	end
+	if dlg.data["download_install"] then
+		-- run the updater again to check for remaining updates
+		app.command.aseExtensionUpdater()
 	end
 end
 
 -- Aseprite plugin API stuff...
 ---@diagnostic disable-next-line: lowercase-global
 function init(plugin)
-	-- preferences = plugin.preferences -- load preferences
 	plugin:newCommand {
 		id = "aseExtensionUpdater",
-		title = "Check for Extension Updates",
+		title = "Check for Extension Updates...",
 		group = "file_scripts",
 		onclick = main
 	}
+	preferences = plugin.preferences -- load preferences
+	if preferences.checkAtStartup == nil then
+		preferences.checkAtStartup = false
+	elseif preferences.checkAtStartup then
+		main(true)
+	end
 end
 
 ---@diagnostic disable-next-line: lowercase-global
 function exit(plugin)
-	-- plugin.preferences = preferences -- save preferences
+	plugin.preferences = preferences -- save preferences
 	return nil
 end

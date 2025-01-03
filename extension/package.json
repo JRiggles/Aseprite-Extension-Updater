@@ -2,7 +2,7 @@
     "name": "ase-extension-updater",
     "displayName": "Extension Updater",
     "description": "Checks for updates to Aseprite Extensions",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "author": {
         "name": "John Riggles",
         "email": "jriggles@icloud.com",
