@@ -9,7 +9,7 @@ This Aseprite extension allows you to easily check participating[^1] Aseprite ex
 >[!IMPORTANT]
 >This extension will only be able to update Aseprite extensions which have been *specifically designed to work with it* (see note 1)
 
-*current release: [v1.0.0](https://sudo-whoami.itch.io/extension-name-here)*
+*current release: [v0.1.0](https://sudo-whoami.itch.io/ase-extension-updater)*
 
 ## Latest Changes
 Initial release!
