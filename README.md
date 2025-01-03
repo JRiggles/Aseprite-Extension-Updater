@@ -4,7 +4,7 @@
 
 #### An Aseprite extension
 This Aseprite extension allows you to easily check participating[^1] Aseprite extensions for updates and download them.
-[^1]: For information on how to add compatibility with the updater to your extension, please refer to [Adding Updater Compatibility to Your Extension](#adding-updater-compatibility-to-your-extension).
+[^1]: For information on how to add compatibility with the updater to your extension, please refer to [Adding Updater Compatibility to Your Extension](#adding-your-extension).
 
 >[!IMPORTANT]
 >This extension will only be able to update Aseprite extensions which have been *specifically designed to work with it* (see note 1)
@@ -63,7 +63,7 @@ If you find this extension useful, please consider donating via itch.io to suppo
 
 ## For Extension Developers
 
-### Adding Updater Compatibility to Your Extension
+### Adding Your Extension
 To add updater compatibility to your extension, you'll need to make a few changes to your `package.json` file and use **GitHub releases** for versioning.
 
 >[!IMPORTANT]
