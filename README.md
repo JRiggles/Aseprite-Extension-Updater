@@ -97,3 +97,4 @@ Once you've made the changes to your extension's `package.json`, you just need t
 ## TODO
 - [ ] Support for other release sources, like GitLab or itch.io
 - [ ] Allow `-alpha` / `-beta` / unstable updates
+- [ ] Add link to release notes / changelogs (or display them in a separate dialog?)
