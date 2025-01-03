@@ -37,6 +37,11 @@ Once installed, you can find the updater in Aseprite's `File` menu.
 
 Simply click on **Check for Extension Updates** to check for updates and download the latest versions of compatible installed extensions.
 
+## Installation
+You can download this extension from [itch.io](https://sudo-whoami.itch.io/extension-name-here) as a "pay what you want" tool
+
+If you find this extension useful, please consider donating via itch.io to support further development! &hearts;
+
 ## For Extension Developers
 
 ### Adding Updater Compatibility to Your Extension
@@ -75,11 +80,6 @@ Once you've made the changes to your extension's `package.json`, you just need t
 
 >[!NOTE]
 > For more detailed information on how to create and manage releases on GitHub, please refer to the [GitHub Releases documentation](https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases)
-
-## Installation
-You can download this extension from [itch.io](https://sudo-whoami.itch.io/extension-name-here) as a "pay what you want" tool
-
-If you find this extension useful, please consider donating via itch.io to support further development! &hearts;
 
 ## TODO
 - [ ] Support for other release sources, like GitLab or itch.io
