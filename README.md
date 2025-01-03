@@ -77,7 +77,6 @@ Add the following to the root of your `package.json`:
 >[!TIP]
 > You can add this JSON snippet anywhere between the opening and closing brackets `{}` in your extension's `package.json` file - just be mindful of commas!
 
-
 ### Using GitHub Releases
 
 1. **Create a new release**: Go to your GitHub repository, click on "Releases" on the right sidebar, and then click "Draft a new release".
@@ -93,6 +92,9 @@ Once you've made the changes to your extension's `package.json`, you just need t
 
 >[!NOTE]
 > For more detailed information on how to create and manage releases on GitHub, please refer to the [GitHub Releases documentation](https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases)
+
+>[!TIP]
+> You don't need to have the **Aseprite Extension Updater** extension installed in order to add updater compatibility to your own extension(s), but it does help with testing!
 
 ## TODO
 - [ ] Support for other release sources, like GitLab or itch.io
