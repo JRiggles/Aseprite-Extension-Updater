@@ -9,13 +9,15 @@ This Aseprite extension allows you to easily check participating[^1] Aseprite ex
 >[!IMPORTANT]
 >This extension will only be able to update Aseprite extensions which have been *specifically designed to work with it* (see note 1)
 
-*current release: [v0.1.0](https://sudo-whoami.itch.io/ase-extension-updater)*
+*current release: [v0.2.0](https://sudo-whoami.itch.io/ase-extension-updater)*
 
 ## Latest Changes
-Initial release!
+- **Feature**: Added the option to check for extension updates when Aseprite starts (thanks to Lospec Discord user @Astropulse for the idea!)
+- **Feature**: Added the ability to refresh the updater dialog
+- **Fixed**: GUI tweaks and dialog improvements
+- **Fixed**: Download + Install dialog behavior
 
 ## Known Limitations / Issues
-- If you have multiple extensions with available updates, you will need to run the extension again after clicking "Download + Install" for any extension, because the dialog must be closed in order for Aseprite's native extension install dialog to show up. Fix is TBD.
 - Due to the reliance on GitHub Releases, paywalled extensions are not currently supported (and consequently neither are paid updates)
 
 ## Requirements
@@ -38,7 +40,9 @@ Once installed, you can find the updater in Aseprite's `File` menu.
 
 ![file menu](./screenshots/file%20menu.png)
 
-Simply click on **Check for Extension Updates** to check for updates and download the latest versions of compatible installed extensions.
+Simply click on **Check for Extension Updates...** to check for updates and download the latest versions of compatible installed extensions.
+
+You can also configure the updater to check for extension updates automatically when Aseprite starts!
 
 ### If any updates are available, you'll see them listed in a dialog like this:
 
@@ -108,5 +112,6 @@ Use this badge to let others know your extension supports the updater
 
 ## TODO
 - [ ] Support for other release sources, like GitLab or itch.io
+- [ ] Support for paywalled release sources?
 - [ ] Allow `-alpha` / `-beta` / unstable updates
 - [ ] Add link to release notes / changelogs (or display them in a separate dialog?)
