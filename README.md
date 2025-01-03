@@ -3,7 +3,7 @@
 ![icon](./screenshots/Extension%20Updater%20Icon.png)
 
 #### An Aseprite extension
-This Aseprite extension allows you to easily check for updates to participating[^1] Aseprite extensions for updates and download them.
+This Aseprite extension allows you to easily check participating[^1] Aseprite extensions for updates and download them.
 [^1]: For information on how to add compatibility with the updater to your extension, please refer to [Adding Updater Compatibility to Your Extension](#adding-updater-compatibility-to-your-extension).
 
 >[!IMPORTANT]
