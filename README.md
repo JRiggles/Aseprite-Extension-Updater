@@ -3,15 +3,17 @@
 ![icon](./screenshots/Extension%20Updater%20Icon.png)
 
 #### An Aseprite extension
+This Aseprite extension allows you to easily check for updates to participating[^1] Aseprite extensions for updates and download them.
+[^1]: For information on how to add compatibility with the updater to your extension, please refer to [Adding Updater Compatibility to Your Extension](#adding-updater-compatibility-to-your-extension).
+
+>[!IMPORTANT]
+>This extension will only be able to update Aseprite extensions which have been *specifically designed to work with it* (see note 1)
+
 *current release: [v1.0.0](https://sudo-whoami.itch.io/extension-name-here)*
 
 ## Latest Changes
 Initial release!
 
-##
-This Aseprite extension allows you to easily check for updates to participating[^1] Aseprite extensions for updates and download them.
-
-[^1]: For information on how to add compatibility with the updater to your extension, please refer to [Adding Updater Compatibility to Your Extension](#adding-updater-compatibility-to-your-extension).
 
 ## Requirements
 
