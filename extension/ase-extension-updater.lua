@@ -78,7 +78,7 @@ local function checkExtensions()
 end
 
 local function downloadAndInstall(update)
-	local tempFilePath = app.fs.joinPath(app.fs.userDocsPath, update.name .. ".aseprite-extension")
+	local tempFilePath = app.fs.joinPath(app.fs.app.fs.tempPath, update.name .. ".aseprite-extension")
 	-- download the extension to a temporary file and open it in Aseprite
 	if app.fs.isFile(tempFilePath) then
 		-- remove the file if it already exists
