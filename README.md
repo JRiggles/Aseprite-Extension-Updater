@@ -83,3 +83,4 @@ If you find this extension useful, please consider donating via itch.io to suppo
 
 ## TODO
 - [ ] Support for other release sources, like GitLab or itch.io
+- [ ] Allow `-alpha` / `-beta` / unstable updates
