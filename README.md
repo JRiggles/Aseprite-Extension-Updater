@@ -15,7 +15,7 @@ This Aseprite extension allows you to easily check for updates to participating[
 
 ## Requirements
 
-This extension has been tested on both Windows and Mac OS (specifically, Windows 11 and Mac OS Sonoma 14.3.1)
+This extension has been tested on both Windows and Mac OS (specifically, Windows 11 and Mac OS Sequoia 15.1.1)
 
 It should also work for Linux, but that hasn't been tested.
 
