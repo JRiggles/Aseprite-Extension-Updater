@@ -75,7 +75,7 @@ Add the following to the root of your `package.json`:
 `asepriteExtensionUpdater.updateUrl` is the URL that the updater extension checks for the latest release. This should point to the latest release API endpoint of your GitHub repository. Be sure to include `your-github-username` and `your-extension-repo` in the URL!
 
 >[!TIP]
-> You can add this JSON snippet anywhere between the opening and closing brackets `{}` in your extension's `package.json` file
+> You can add this JSON snippet anywhere between the opening and closing brackets `{}` in your extension's `package.json` file - just be mindful of commas!
 
 
 ### Using GitHub Releases
