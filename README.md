@@ -71,7 +71,7 @@ By following these steps, your extension will be compatible with the Aseprite Ex
 
 Once you've made the changes to your extension's `package.json`, you just need to create a GitHub release whenever you update your Aseprite extension.
 
->[!INFO]
+>[!NOTE]
 > For more detailed information on how to create and manage releases on GitHub, please refer to the [GitHub Releases documentation](https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases)
 
 ## Installation
