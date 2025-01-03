@@ -1,12 +1,15 @@
 {
-    "name": "",
-    "displayName": "",
-    "description": "",
-    "version": "1.0.0",
+    "name": "ase-extension-updater",
+    "displayName": "Extension Updater",
+    "description": "Checks for updates to Aseprite Extensions",
+    "version": "0.1.0",
     "author": {
         "name": "John Riggles",
         "email": "jriggles@icloud.com",
         "url": "https://jriggl.es/"
+    },
+    "asepriteExtensionUpdater": {
+        "updateUrl": "https://api.github.com/repos/jriggles/aseprite-extension-updater/releases/latest"
     },
     "contributors": [],
     "publisher": "sudo_whoami",
@@ -15,7 +18,7 @@
     "contributes": {
         "scripts": [
             {
-                "path": "./<extension name here>.lua"
+                "path": "./ase-extension-updater.lua"
             }
         ]
     }
