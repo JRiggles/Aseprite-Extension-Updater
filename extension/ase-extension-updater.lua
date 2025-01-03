@@ -45,13 +45,14 @@ local function getLatestReleaseData(endpoint)
 	end
 end
 
---- Check for updates to the installed extensions.
+--- Determine which installed extensions are compatible with the updater.
+---
 --- This function will go through the list of installed extensions and check their package.json
 --- files for repository information. If the repository information is found, the extension's
 --- repository owner, name, and latest release verion added to the retuned table.
 ---
 --- @return table | nil -- a table of info for compatible extensions, or nil if none are found
-local function checkExtensions()
+local function findCompatibleExtensions()
 	local extensionsDir = app.fs.joinPath(app.fs.userConfigPath, "extensions")
 	local allExtensions = app.fs.listFiles(extensionsDir)
 	local compatibleExtensions = {}
@@ -78,7 +79,7 @@ local function checkExtensions()
 end
 
 local function downloadAndInstall(update)
-	local tempFilePath = app.fs.joinPath(app.fs.app.fs.tempPath, update.name .. ".aseprite-extension")
+	local tempFilePath = app.fs.joinPath(app.fs.tempPath, update.name .. ".aseprite-extension")
 	-- download the extension to a temporary file and open it in Aseprite
 	if app.fs.isFile(tempFilePath) then
 		-- remove the file if it already exists
@@ -93,58 +94,59 @@ local function downloadAndInstall(update)
 end
 
 local function compareVersions(currentVersion, releaseVersion)
-	local function splitVersion(version)
-		local major, minor, patch = version:match("(%d+)%.(%d+)%.(%d+)$")
-		return tonumber(major), tonumber(minor), tonumber(patch)
+	-- remove leading characters from the releaseVersion string
+	releaseVersion = releaseVersion:match("%d+[%d%.]*")
+	-- convert each version string to a Version object
+	local current = Version(currentVersion)
+	local release = Version(releaseVersion)
+	-- compare the current and release versions
+	if release.prereleaseLabel ~= "" then  -- TODO: allow for prerelease/unstable updates
+		return false  -- disregard the releaseVersion if it's a prerelease
+	elseif current >= release then
+		return false  -- current version is up to date (or ahead) of the release version
+	else
+		return true  -- an update is available
 	end
-
-	local major1, minor1, patch1 = splitVersion(currentVersion)
-	local major2, minor2, patch2 = splitVersion(releaseVersion)
-
-	if major2 > major1 then
-		return true
-	elseif minor2 > minor1 then
-		return true
-	elseif patch2 > patch1 then
-		return true
-	end
-	return false -- current version is up to date (or ahead) of the release version
 end
 
 local function main()
 	-- check installed extensions for repository info / compatibility with updater
-	local compatibleExtensions = checkExtensions()
+	local compatibleExtensions = findCompatibleExtensions()
 	if compatibleExtensions == nil then
 		return
 	end
 
-	local availableUpdates = {}
+	local availableUpdates = {}  -- table to store available update info
+
+	-- iterate through the compatible extensions and check for updates
 	for displayName, info in pairs(compatibleExtensions) do
+		-- unpack the extension info
 		local endpoint, extensionVersion, name = info[1], info[2], info[3]
-		local releaseData = getLatestReleaseData(endpoint)
-		if releaseData == nil then
-			app.alert{
-				title="Extension Updater Error",
-				text='Could not fetch release data for "' .. displayName .. '" from "' .. endpoint .. '"'
-			}
-			return
-		end
+		local releaseData = assert(
+			getLatestReleaseData(endpoint),
+			'Could not fetch release data for "' .. displayName .. '" from "' .. endpoint .. '"'
+		)
 		-- get the latest release version from the fetched data
 		local tagVersion = releaseData.tag_name
 
 		if releaseData.assets then
 			for _, asset in ipairs(releaseData.assets) do
+				-- find the aseprite-extension bundle in the release assets
 				if asset.name:match("%.aseprite%-extension$") then
 					local downloadUrl = asset.browser_download_url
+					-- check the installed version against the release version
 					local updateAvailable = compareVersions(extensionVersion, tagVersion)
 					if updateAvailable then
-						table.insert(availableUpdates, {
-							extensionVersion = extensionVersion,
-							name = name,
-							displayName = displayName,
-							tagVersion = tagVersion,
-							downloadUrl = downloadUrl
-						})
+						table.insert(
+							availableUpdates,
+							{
+								extensionVersion = extensionVersion,
+								name = name,
+								displayName = displayName,
+								tagVersion = tagVersion,
+								downloadUrl = downloadUrl
+							}
+						)
 					end
 					break
 				end
@@ -161,7 +163,7 @@ local function main()
 		local dlg = Dialog{ title="Updates Available" }
 		for _, update in ipairs(availableUpdates) do
 			-- strip the tagVersion to just its numerical and '.' characters
-			local sanitizedTagVersion = update.tagVersion:gsub("[^%d%.]", "")
+			local sanitizedTagVersion = update.tagVersion:match("%d+[%d%.]*")
 			dlg:label{
 				text='"' .. update.displayName .. '" ' .. update.extensionVersion ..  ' >> ' .. sanitizedTagVersion,
 				hexpand=false
@@ -182,7 +184,6 @@ local function main()
 				id="download_install",
 				text="Download + Install",
 				hexpand=true,
-				focused=true,
 				onclick=function()
 					downloadAndInstall(update)
 					dlg:close()
@@ -205,13 +206,13 @@ local function main()
 		-- 		dlg:close()
 		-- 	end
 		-- }
-		:button{id="cancel", text="Cancel", onclick=function() dlg:close() end}
+		:button{id="cancel", text="Cancel", focus=true }
 		:show()
 		-- TODO: run the updater again to check for remaining updates
-		if dlg.data["download_install"] then
+		-- if dlg.data["download_install"] then
 			-- run the updater again to check for remaining updates
 			-- app.command.aseExtensionUpdater()
-		end
+		-- end
 	else
 		app.alert{title="No Updates Available", text="All qualified extensions are up to date!"}
 	end
