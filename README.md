@@ -14,6 +14,9 @@ This Aseprite extension allows you to easily check participating[^1] Aseprite ex
 ## Latest Changes
 Initial release!
 
+## Known Limitations / Issues
+- If you have multiple extensions with available updates, you will need to run the extension again after clicking "Download + Install" for any extension, because the dialog must be closed in order for Aseprite's native extension install dialog to show up. Fix is TBD.
+
 
 ## Requirements
 
