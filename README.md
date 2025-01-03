@@ -88,13 +88,14 @@ Add the following to the root of your `package.json`:
 
 By following these steps, your extension will be compatible with the Aseprite Extension Updater, allowing users to easily check for and download updates!
 
-You can use this badge to let others know your extension supports the updater (you can find it in the `screenshots` folder)
-
-<span align="center">
-    <img src="./screenshots/Extension%20Updater%20Badge.png" alt="badge">
-</span>
-
 Once you've made the changes to your extension's `package.json`, you just need to create a GitHub release whenever you update your Aseprite extension.
+
+### Show Your Support
+Use this badge to let others know your extension supports the updater
+
+<p align="center">
+    <img src="./screenshots/Extension%20Updater%20Badge.png" alt="badge">
+</p>
 
 >[!NOTE]
 > For more detailed information on how to create and manage releases on GitHub, please refer to the [GitHub Releases documentation](https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases)
