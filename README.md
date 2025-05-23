@@ -1,5 +1,7 @@
 # Aseprite Extension Updater
 
+### This project is on hold until I can find a suitable solution for updating paid Aseprite extensions such as those hosted on itch.io, and expand its functionality beyond relying solely on GitHub releases
+
 ![icon](./screenshots/Extension%20Updater%20Icon.png)
 
 #### An Aseprite extension
